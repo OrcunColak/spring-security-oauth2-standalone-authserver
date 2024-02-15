@@ -1,0 +1,38 @@
+server:
+  port: 64200
+  forward-headers-strategy: framework
+
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          localhost:
+            registration:
+              client-id: localhost
+              client-name: localhost
+              client-secret: "{noop}localhost"
+              authorization-grant-types: client_credentials
+              client-authentication-methods: client_secret_post,client_secret_basic
+            token:
+              # The Authorization Server issues access tokens as opaque strings.
+              # Opaque tokens do not contain any meaningful information or claims readable by the client.
+              # Instead, the Resource Server must present the token to the Authorization Server to validate its authenticity
+              # and obtain details about the token.
+              access-token-format: reference
+              access-token-time-to-live: 240s
+          second:
+            registration:
+              client-id: second
+              client-name: second
+              client-secret: "{noop}second"
+              authorization-grant-types: client_credentials
+              client-authentication-methods: client_secret_post,client_secret_basic
+            token:
+              access-token-format: reference
+              access-token-time-to-live: 3600s
+
+logging:
+  level:
+    org.springframework: DEBUG
+
